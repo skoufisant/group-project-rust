@@ -10,7 +10,7 @@ import joblib
 import pandas as pd
 
 # Edit this list to match the features used in your model
-FEATURE_ORDER = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one year", "Contract_two year", "InternetService_fiber optic", "InternetService_no"]
+FEATURE_ORDER = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one year", "Contract_two year", "InternetService_fiber optic", "OnlineSecurity_yes"]
 
 
 BUNDLE = joblib.load("models/telco_logistic_regression.joblib")
@@ -22,9 +22,21 @@ def make_prediction(**kwargs: float) -> float:
 
     Adjust FEATURE_ORDER above according to the model definition.
     """
+    # Map underscored parameter names to feature names with spaces
+    param_mapping = {
+        "Contract_one_year": "Contract_one year",
+        "Contract_two_year": "Contract_two year",
+        "InternetService_fiber_optic": "InternetService_fiber optic",
+    }
+    
+    # Convert underscored names to actual feature names
+    mapped_kwargs = {}
+    for key, value in kwargs.items():
+        mapped_kwargs[param_mapping.get(key, key)] = value
+    
     # Extract features in the correct order
     try:
-        args = [kwargs[feature] for feature in FEATURE_ORDER]
+        args = [mapped_kwargs[feature] for feature in FEATURE_ORDER]
     except KeyError as e:
         raise ValueError(f"Missing feature: {e.args[0]}") from e
     
