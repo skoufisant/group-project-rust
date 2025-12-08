@@ -33,7 +33,7 @@ def _():
 
     SAVE_MODEL = False
 
-    SELECTED_FEATURES = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one year", "Contract_two year", "InternetService_fiber optic", "InternetService_no"]
+    SELECTED_FEATURES = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one_year", "Contract_two_year", "InternetService_fiber_optic", "InternetService_no"]
     TEST_SIZE = 0.20
     C_VALUE = 1.0
     MAX_ITER = 1000
@@ -76,6 +76,11 @@ def _(SELECTED_FEATURES):
 
         # Data Transformation: Transform categorical variables using one-hot encoding
         X = pd.get_dummies(cleaned.drop(columns=["Churn"]), drop_first=True, dtype=int)
+
+        # Data Naming Change
+        X["Contract_one_year"] = X.pop("Contract_one year")
+        X["Contract_two_year"] = X.pop("Contract_two year")
+        X["InternetService_fiber_optic"] = X.pop("InternetService_fiber optic")
 
         print("Available features after encoding:", X.columns.tolist())
         print("Selected features for modeling:", SELECTED_FEATURES)
