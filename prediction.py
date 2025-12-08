@@ -10,7 +10,7 @@ import joblib
 import pandas as pd
 
 # Edit this list to match the features used in your model
-FEATURE_ORDER = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one_year", "Contract_two_year", "InternetService_fiber_optic", "OnlineSecurity_yes"]
+FEATURE_ORDER = ["tenure", "MonthlyCharges", "TechSupport_yes", "PhoneService_yes", "Contract_one_year", "Contract_two_year", "InternetService_fiber_optic", "InternetService_no"]
 
 
 BUNDLE = joblib.load("models/telco_logistic_regression.joblib")
